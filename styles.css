@@ -87,11 +87,6 @@ aside {
   margin-bottom: 10px;
   img {
     max-width: 100%;
-    transition: var(--transition-scale);
-  }
-  img:hover {
-    cursor: pointer;
-    transform: scale(1.1);
   }
 }
 footer {

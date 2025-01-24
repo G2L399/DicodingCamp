@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jupiter</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        font-family: "Space Mono", monospace;
+        background-color: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: #000;
+        --progress-bar-color: #ffd700;
+      }
+      .info-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        padding-top: 50px;
+        border-radius: 10px;
+        max-width: 100%;
+        max-height: 100vh;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: auto;
+      }
+      .info-panel.collapsed {
+        max-height: 100vh;
+
+        padding: 20px;
+      }
+      .info-panel.expanded {
+        max-height: 100vh;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffd700;
+      }
+      p {
+        font-size: 2em;
+        line-height: 1.4;
+      }
+      button {
+        font-family: inherit;
+        font-size: 1em;
+        color: #000;
+        background-color: #ffd700;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #ffa500;
+      }
+      .background-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background-text">Jupiter</div>
+      <model-viewer
+        id="model-viewer"
+        src="./jupiter.glb"
+        tone-mapping="neutral"
+        camera-controls
+        field-of-view="15deg"
+        exposure="1.5"
+        shadow-softness="1"
+        auto-rotate
+      >
+        <div class="info-panel collapsed" id="info-panel">
+          <div style="display: flex; gap: 20px; margin-top: 20px">
+            <h1>
+              <a href="../index.html">Go Back</a>
+            </h1>
+            <h1>Jupiter</h1>
+          </div>
+          <div class="button-container">
+            <button id="toggle-button">Show More</button>
+          </div>
+
+          <p id="info-text">
+            Jupiter is the fifth planet from the Sun and the largest in the
+            Solar System. It is a gas giant with a mass more than 2.5 times that
+            of all the other planets in the Solar System combined and slightly
+            less than one-thousandth the mass of the Sun
+          </p>
+        </div>
+      </model-viewer>
+    </div>
+
+    <script>
+      const infoPanel = document.getElementById("info-panel");
+      const toggleButton = document.getElementById("toggle-button");
+      const infoText = document.getElementById("info-text");
+
+      toggleButton.addEventListener("click", () => {
+        if (infoPanel.classList.contains("collapsed")) {
+          infoPanel.classList.remove("collapsed");
+          infoPanel.classList.add("expanded");
+          infoText.innerHTML = `
+            Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a mass more than 2.5 times that of all the other planets in the Solar System combined and slightly less than one-thousandth the mass of the Sun. Its diameter is eleven times that of Earth, and a tenth that of the Sun. Jupiter orbits the Sun at a distance of 5.20 AU (778.5 Gm), with an orbital period of 11.86 years. It is the third-brightest natural object in the Earth's night sky, after the Moon and Venus, and has been observed since prehistoric times. Its name derives from that of Jupiter, the chief deity of ancient Roman religion.
+            <br/><br/>
+            Jupiter was the first of the Sun's planets to form, and its inward migration during the primordial phase of the Solar System affected much of the formation history of the other planets. Jupiter's atmosphere consists of 76% hydrogen and 24% helium by mass, with a denser interior. It contains trace elements and compounds like carbon, oxygen, sulfur, neon, ammonia, water vapour, phosphine, hydrogen sulfide, and hydrocarbons. Jupiter's helium abundance is 80% of the Sun's, similar to Saturn's composition. The ongoing contraction of Jupiter's interior generates more heat than the planet receives from the Sun. Its internal structure is believed to consist of an outer mantle of fluid metallic hydrogen and a diffuse inner core of denser material. Because of its rapid rate of rotation, one turn in ten hours, Jupiter is an oblate spheroid; it has a slight but noticeable bulge around the equator. The outer atmosphere is divided into a series of latitudinal bands, with turbulence and storms along their interacting boundaries; the most obvious result of this is the Great Red Spot, a giant storm that has been recorded since 1831.
+          `;
+          toggleButton.textContent = "Show Less";
+        } else {
+          infoPanel.classList.remove("expanded");
+          infoPanel.classList.add("collapsed");
+          infoText.innerHTML = `
+          Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a mass more than 2.5 times that of all the other planets in the Solar System combined and slightly less than one-thousandth the mass of the Sun
+          `;
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+  </body>
+</html>

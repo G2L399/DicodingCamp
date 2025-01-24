@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earth</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        font-family: "Space Mono", monospace;
+        background-color: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: #000;
+        --progress-bar-color: #ffd700;
+      }
+      .info-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        padding-top: 50px;
+        border-radius: 10px;
+        max-width: 100%;
+        max-height: 100vh;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: auto;
+      }
+      .info-panel.collapsed {
+        max-height: 100vh;
+
+        padding: 20px;
+      }
+      .info-panel.expanded {
+        max-height: 100vh;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffd700;
+      }
+      p {
+        font-size: 2em;
+        line-height: 1.4;
+      }
+      button {
+        font-family: inherit;
+        font-size: 1em;
+        color: #000;
+        background-color: #ffd700;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #ffa500;
+      }
+      .background-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background-text">EARTH</div>
+      <model-viewer
+        id="model-viewer"
+        src="./earth.glb"
+        tone-mapping="neutral"
+        camera-controls
+        field-of-view="15deg"
+        exposure="1.5"
+        shadow-softness="1"
+        auto-rotate
+      >
+        <div class="info-panel collapsed" id="info-panel">
+          <div style="display: flex; gap: 20px; margin-top: 20px">
+            <h1>
+              <a href="../index.html">Go Back</a>
+            </h1>
+            <h1>Earth</h1>
+          </div>
+          <div class="button-container">
+            <button id="toggle-button">Show More</button>
+          </div>
+
+          <p id="info-text">
+            Earth is the third planet from the Sun and the only astronomical
+            object known to harbor life. This is enabled by Earth being an ocean
+            world, the only one in the Solar System sustaining liquid surface
+            water.
+          </p>
+        </div>
+      </model-viewer>
+    </div>
+
+    <script>
+      const infoPanel = document.getElementById("info-panel");
+      const toggleButton = document.getElementById("toggle-button");
+      const infoText = document.getElementById("info-text");
+
+      toggleButton.addEventListener("click", () => {
+        if (infoPanel.classList.contains("collapsed")) {
+          infoPanel.classList.remove("collapsed");
+          infoPanel.classList.add("expanded");
+          infoText.innerHTML = `
+            Earth is the third planet from the Sun and the only astronomical object known to harbor life. This is enabled by Earth being an ocean world, the only one in the Solar System sustaining liquid surface water. Almost all of Earth's water is contained in its global ocean, covering 70.8% of Earth's crust. The remaining 29.2% of Earth's crust is land, most of which is located in the form of continental landmasses within Earth's land hemisphere. Most of Earth's land is at least somewhat humid and covered by vegetation, while large sheets of ice at Earth's polar deserts retain more water than Earth's groundwater, lakes, rivers, and atmospheric water combined. Earth's crust consists of slowly moving tectonic plates, which interact to produce mountain ranges, volcanoes, and earthquakes. Earth has a liquid outer core that generates a magnetosphere capable of deflecting most of the destructive solar winds and cosmic radiation.
+            <br /><br />
+            Earth has a dynamic atmosphere, which sustains Earth's surface conditions and protects it from most meteoroids and UV-light at entry. It has a composition of primarily nitrogen and oxygen. Water vapor is widely present in the atmosphere, forming clouds that cover most of the planet. The water vapor acts as a greenhouse gas and, together with other greenhouse gases in the atmosphere, particularly carbon dioxide (CO2), creates the conditions for both liquid surface water and water vapor to persist via the capturing of energy from the Sun's light. This process maintains the current average surface temperature of 14.76 °C (58.57 °F), at which water is liquid under normal atmospheric pressure. Differences in the amount of captured energy between geographic regions (as with the equatorial region receiving more sunlight than the polar regions) drive atmospheric and ocean currents, producing a global climate system with different climate regions, and a range of weather phenomena such as precipitation, allowing components such as nitrogen to cycle.
+          `;
+          toggleButton.textContent = "Show Less";
+        } else {
+          infoPanel.classList.remove("expanded");
+          infoPanel.classList.add("collapsed");
+          infoText.innerHTML = `
+            Earth is the third planet from the Sun and the only astronomical object known to harbor life. This is enabled by Earth being an ocean world, the only one in the Solar System sustaining liquid surface water.
+          `;
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+  </body>
+</html>

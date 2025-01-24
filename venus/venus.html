@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venus</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        font-family: "Space Mono", monospace;
+        background-color: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: #000;
+        --progress-bar-color: #ffd700;
+      }
+      .info-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        padding-top: 50px;
+        border-radius: 10px;
+        max-width: 100%;
+        max-height: 100vh;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: auto;
+      }
+      .info-panel.collapsed {
+        max-height: 100vh;
+
+        padding: 20px;
+      }
+      .info-panel.expanded {
+        max-height: 100vh;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffd700;
+      }
+      p {
+        font-size: 2em;
+        line-height: 1.4;
+      }
+      button {
+        font-family: inherit;
+        font-size: 1em;
+        color: #000;
+        background-color: #ffd700;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #ffa500;
+      }
+      .background-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background-text">Venus</div>
+      <model-viewer
+        id="model-viewer"
+        src="./venus.glb"
+        tone-mapping="neutral"
+        camera-controls
+        field-of-view="15deg"
+        exposure="1.5"
+        shadow-softness="1"
+        auto-rotate
+      >
+        <div class="info-panel collapsed" id="info-panel">
+          <div style="display: flex; gap: 20px; margin-top: 20px">
+            <h1>
+              <a href="../index.html">Go Back</a>
+            </h1>
+            <h1>Venus</h1>
+          </div>
+          <div class="button-container">
+            <button id="toggle-button">Show More</button>
+          </div>
+
+          <p id="info-text">
+            Venus is the second planet from the Sun. It is a terrestrial planet
+            and is the closest in mass and size to its orbital neighbour Earth.
+            Venus has by far the densest atmosphere of the terrestrial planets,
+            composed mostly of carbon dioxide with a thick, global sulfuric acid
+            cloud cover.
+          </p>
+        </div>
+      </model-viewer>
+    </div>
+
+    <script>
+      const infoPanel = document.getElementById("info-panel");
+      const toggleButton = document.getElementById("toggle-button");
+      const infoText = document.getElementById("info-text");
+
+      toggleButton.addEventListener("click", () => {
+        if (infoPanel.classList.contains("collapsed")) {
+          infoPanel.classList.remove("collapsed");
+          infoPanel.classList.add("expanded");
+          infoText.innerHTML = `
+            Venus is the second planet from the Sun. It is a terrestrial planet and is the closest in mass and size to its orbital neighbour Earth. Venus has by far the densest atmosphere of the terrestrial planets, composed mostly of carbon dioxide with a thick, global sulfuric acid cloud cover. At the surface it has a mean temperature of 737 K (464 °C; 867 °F) and a pressure 92 times that of Earth's at sea level. These extreme conditions compress carbon dioxide into a supercritical state at Venus's surface.
+            <br /><br />
+            Internally, Venus has a core, mantle, and crust. Venus lacks an internal dynamo, and its weakly induced magnetosphere is caused by atmospheric interactions with the solar wind. Internal heat escapes through active volcanism, resulting in resurfacing instead of plate tectonics. Venus is one of two planets in the Solar System, the other being Mercury, that have no moons. Conditions perhaps favourable for life on Venus have been identified at its cloud layers. Venus may have had liquid surface water early in its history with a habitable environment, before a runaway greenhouse effect evaporated any water and turned Venus into its present state.
+            <br /><br />
+            The rotation of Venus has been slowed and turned against its orbital direction (retrograde) by the currents and drag of its atmosphere. It takes 224.7 Earth days for Venus to complete an orbit around the Sun, and a Venusian solar year is just under two Venusian days long. The orbits of Venus and Earth are the closest between any two Solar System planets, approaching each other in synodic periods of 1.6 years. Venus and Earth have the lowest difference in gravitational potential of any pair of Solar System planets. This allows Venus to be the most accessible destination and a useful gravity assist waypoint for interplanetary flights from Earth.
+          `;
+          toggleButton.textContent = "Show Less";
+        } else {
+          infoPanel.classList.remove("expanded");
+          infoPanel.classList.add("collapsed");
+          infoText.innerHTML = `
+          Venus is the second planet from the Sun. It is a terrestrial planet and is the closest in mass and size to its orbital neighbour Earth. Venus has by far the densest atmosphere of the terrestrial planets, composed mostly of carbon dioxide with a thick, global sulfuric acid cloud cover.
+          `;
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+  </body>
+</html>

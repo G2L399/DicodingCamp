@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neptune</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        font-family: "Space Mono", monospace;
+        background-color: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: #000;
+        --progress-bar-color: #ffd700;
+      }
+      .info-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        padding-top: 50px;
+        border-radius: 10px;
+        max-width: 100%;
+        max-height: 100vh;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: auto;
+      }
+      .info-panel.collapsed {
+        max-height: 100vh;
+
+        padding: 20px;
+      }
+      .info-panel.expanded {
+        max-height: 100vh;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffd700;
+      }
+      p {
+        font-size: 2em;
+        line-height: 1.4;
+      }
+      button {
+        font-family: inherit;
+        font-size: 1em;
+        color: #000;
+        background-color: #ffd700;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #ffa500;
+      }
+      .background-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background-text">Neptune</div>
+      <model-viewer
+        id="model-viewer"
+        src="./neptune.glb"
+        tone-mapping="neutral"
+        camera-controls
+        field-of-view="15deg"
+        exposure="1.5"
+        shadow-softness="1"
+        auto-rotate
+      >
+        <div class="info-panel collapsed" id="info-panel">
+          <div style="display: flex; gap: 20px; margin-top: 20px">
+            <h1>
+              <a href="../index.html">Go Back</a>
+            </h1>
+            <h1>Neptune</h1>
+          </div>
+          <div class="button-container">
+            <button id="toggle-button">Show More</button>
+          </div>
+
+          <p id="info-text">
+            Neptune is the eighth and farthest known planet from the Sun. It is
+            the fourth-largest planet in the Solar System by diameter, the
+            third-most-massive planet, and the densest giant planet. It is 17
+            times the mass of Earth.
+          </p>
+        </div>
+      </model-viewer>
+    </div>
+
+    <script>
+      const infoPanel = document.getElementById("info-panel");
+      const toggleButton = document.getElementById("toggle-button");
+      const infoText = document.getElementById("info-text");
+
+      toggleButton.addEventListener("click", () => {
+        if (infoPanel.classList.contains("collapsed")) {
+          infoPanel.classList.remove("collapsed");
+          infoPanel.classList.add("expanded");
+          infoText.innerHTML = `
+            Neptune is the eighth and farthest known planet from the Sun. It is the fourth-largest planet in the Solar System by diameter, the third-most-massive planet, and the densest giant planet. It is 17 times the mass of Earth. Compared to its fellow ice giant Uranus, Neptune is slightly more massive, but denser and smaller. Being composed primarily of gases and liquids, it has no well-defined solid surface, and orbits the Sun once every 164.8 years at an orbital distance of 30.1 astronomical units (4.5 billion kilometres; 2.8 billion miles). It is named after the Roman god of the sea and has the astronomical symbol ♆, representing Neptune's trident.
+      <br/><br/>
+      Neptune is not visible to the unaided eye and is the only planet in the Solar System that was not initially observed by direct empirical observation. Rather, unexpected changes in the orbit of Uranus led Alexis Bouvard to hypothesise that its orbit was subject to gravitational perturbation by an unknown planet. After Bouvard's death, the position of Neptune was mathematically predicted from his observations, independently, by John Couch Adams and Urbain Le Verrier. Neptune was subsequently directly observed with a telescope on 23 September 1846 by Johann Gottfried Galle within a degree of the position predicted by Le Verrier. Its largest moon, Triton, was discovered shortly thereafter, though none of the planet's remaining moons were located telescopically until the 20th century.
+          `;
+          toggleButton.textContent = "Show Less";
+        } else {
+          infoPanel.classList.remove("expanded");
+          infoPanel.classList.add("collapsed");
+          infoText.innerHTML = `
+          Neptune is the eighth and farthest known planet from the Sun. It is the fourth-largest planet in the Solar System by diameter, the third-most-massive planet, and the densest giant planet. It is 17 times the mass of Earth.
+          `;
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+  </body>
+</html>
