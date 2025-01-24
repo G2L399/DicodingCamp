@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mercury</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        font-family: "Space Mono", monospace;
+        background-color: #000;
+        color: #fff;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: #000;
+        --progress-bar-color: #ffd700;
+      }
+      .info-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        padding-top: 50px;
+        border-radius: 10px;
+        max-width: 100%;
+        max-height: 100vh;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: auto;
+      }
+      .info-panel.collapsed {
+        max-height: 100vh;
+
+        padding: 20px;
+      }
+      .info-panel.expanded {
+        max-height: 100vh;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffd700;
+      }
+      p {
+        font-size: 2em;
+        line-height: 1.4;
+      }
+      button {
+        font-family: inherit;
+        font-size: 1em;
+        color: #000;
+        background-color: #ffd700;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #ffa500;
+      }
+      .background-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background-text">MERCURY</div>
+      <model-viewer
+        id="model-viewer"
+        src="./Mercury_1_4878.glb"
+        tone-mapping="neutral"
+        camera-controls
+        field-of-view="15deg"
+        exposure="1.5"
+        shadow-softness="1"
+        auto-rotate
+      >
+        <div class="info-panel collapsed" id="info-panel">
+          <h1>Mercury</h1>
+          <div class="button-container">
+            <button id="toggle-button">Show More</button>
+          </div>
+
+          <p id="info-text">
+            Mercury is the first planet from the Sun and the smallest in the
+            Solar System. In English, it is named after the ancient Roman god
+            Mercurius (Mercury), god of commerce and communication, and the
+            messenger of the gods.
+          </p>
+        </div>
+      </model-viewer>
+    </div>
+
+    <script>
+      const infoPanel = document.getElementById("info-panel");
+      const toggleButton = document.getElementById("toggle-button");
+      const infoText = document.getElementById("info-text");
+
+      toggleButton.addEventListener("click", () => {
+        if (infoPanel.classList.contains("collapsed")) {
+          infoPanel.classList.remove("collapsed");
+          infoPanel.classList.add("expanded");
+          infoText.innerHTML = `
+            Mercury is the first planet from the Sun and the smallest in the Solar System. In English, it is named after the ancient Roman god Mercurius (Mercury), god of commerce and communication, and the messenger of the gods. Mercury is classified as a terrestrial planet, with roughly the same surface gravity as Mars. The surface of Mercury is heavily cratered, as a result of countless impact events that have accumulated over billions of years. Its largest crater, Caloris Planitia, has a diameter of 1,550 km (960 mi), which is about one-third the diameter of the planet (4,880 km or 3,030 mi). Similarly to the Earth's Moon, Mercury's surface displays an expansive rupes system generated from thrust faults and bright ray systems formed by impact event remnants.
+
+            Mercury's sidereal year (88.0 Earth days) and sidereal day (58.65 Earth days) are in a 3:2 ratio. This relationship is called spin–orbit resonance, and sidereal here means "relative to the stars". Consequently, one solar day (sunrise to sunrise) on Mercury lasts for around 176 Earth days: twice the planet's sidereal year. This means that one side of Mercury will remain in sunlight for one Mercurian year of 88 Earth days; while during the next orbit, that side will be in darkness all the time until the next sunrise after another 88 Earth days.
+          `;
+          toggleButton.textContent = "Show Less";
+        } else {
+          infoPanel.classList.remove("expanded");
+          infoPanel.classList.add("collapsed");
+          infoText.innerHTML = `
+           Mercury is the first planet from the Sun and the smallest in the Solar System. In English, it is named after the ancient Roman god Mercurius (Mercury), god of commerce and communication, and the messenger of the gods.
+          `;
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+  </body>
+</html>
